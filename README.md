@@ -111,4 +111,4 @@ Boa sorte — e aproveite sua aventura no mundo de Agrinho!
 ---
 
 Valeu por conferir o **Vila Agrinho**!  
-Agora bora plantar, colher, transformar e vender — o campo e a cidade tão te esperando!
+Agora bora plantar, colher, transformar e vender — o campo e a cidade estão te esperando!
