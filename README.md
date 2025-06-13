@@ -67,9 +67,6 @@ Boa sorte — e aproveite sua aventura no mundo de Agrinho!
 ### ⏱️ Crescimento e Colheita
 - As plantas crescem em 4 segundos.
 - A colheita rende **10 unidades** da planta.
-- Se o inventário estiver cheio, aparece:
-  - *"Inventário cheio"*
-- Após colher, é possível plantar de novo.
 
 ### 🎒 Inventário
 - Mostra quantidades de morango, trigo, pacotes de trigo e sucos.
@@ -93,7 +90,7 @@ Boa sorte — e aproveite sua aventura no mundo de Agrinho!
 ---
 
 ## Visual e Estilo
-- O game usa **pixel art** com escala aumentada para dar visual retrô.
+- O game usa **pixel art** para proporcionar um visual retrô.
 - Todos os personagens, cenários e itens seguem esse estilo.
 
 ---
@@ -110,5 +107,5 @@ Boa sorte — e aproveite sua aventura no mundo de Agrinho!
 
 ---
 
-Valeu por conferir o **Vila Agrinho**!  
+Obrigado por conferir o **Vila Agrinho**!  
 Agora bora plantar, colher, transformar e vender — o campo e a cidade estão te esperando!
