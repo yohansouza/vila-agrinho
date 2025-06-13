@@ -59,7 +59,6 @@ Boa sorte — e aproveite sua aventura no mundo de Agrinho!
 - Trigo só pode ser plantado na horta do NPC 2 (parte de baixo).
 - Se tentar plantar em local errado:
   - *"Você não pode plantar aqui, apenas na horta!"*
-  - *"Plantar essa semente aqui não é permitido!"*
 - Após plantar, o pacote de sementes some do inventário.
 - Se tentar plantar antes da colheita:
   - *"As plantas estão crescendo, espere!!"*
@@ -102,7 +101,7 @@ Boa sorte — e aproveite sua aventura no mundo de Agrinho!
 
 ---
 
-### Desenvolvido por: Yohan  
+### Desenvolvido por: Yoran  dos Santos Souza
 **Desafio:** #agrinho2025
 
 ---
