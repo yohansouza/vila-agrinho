@@ -66,10 +66,16 @@ let alturaTelaNormal = 500;
 let larguraTelaIntroducao = 900; // Nova largura para a introdução.
 let alturaTelaIntroducao = 900; // Altura ajustada para a introdução.
 
-// Textos completos para a introdução e agradecimento.
-// Separar o texto em variáveis facilita a edição e a internacionalização futura.
-let textoIntro =
-  "Olá, caro jogador.\n\nSeja muito bem-vindo ao Vila Agrinho!\nNesta jornada, você descobrirá a importante conexão entre o campo e a cidade, colaborando com os moradores locais.\n\nSua missão é clara: procure os fazendeiros nas hortas, receba as sementes e plante-as (pressionando ENTER) para acompanhar o crescimento e a colheita dos frutos.\n\nPara acessar sua mochila e verificar seus itens, pressione a tecla E.\n\nPara viajar para a cidade e voltar, pressione a tecla C. Ao ir para a cidade, suas sementes desaparecerão do inventário, abrindo espaço para novos itens!\n\n**Atenção:** Ao retornar para o campo, o pacote de trigo e o suco de morango também serão deixados para trás, pois são produtos para a cidade.\n\nNa cidade, procure os NPCs do Mercado e da Indústria e aperte Q para entrar nesses locais.\n\nNa Indústria, use a tecla 2 para transformar o trigo em pacotes de trigo.\n\nNa Indústria, use a tecla 3 para transformar morangos em suco de morango.\n\nNo Mercado, pressione **T** para vender Pacotes de Trigo e **M** para vender Suco de Morango, e acumule dinheiro!\n\n**O seu objetivo é alcançar 30 de dinheiro!**\n\nBoa sorte — e aproveite sua aventura no mundo de Agrinho!";
+let musicaPrincipal; // Música de fundo do jogo.
+
+let mostrarIntroducaoNovamente = false; // Controla se o texto da introdução será reexibido quando o jogador apertar "i".
+
+
+
+let textoIntroducao = "Olá, caro jogador.\n\nEntão está com duvida nos comandos? Tudo bem, aqui vai uma lista dos comandos do Vila Agrinho: \n\nWASD - mover personagem \n\nE - abrir inventário \n\nQ - conversa com o npc indútria e cidade \n\nC - leva o personagem a cidade \n\n1 - transforma trigo em pacote de trigo \n\n2 - transforma morango em suco \n\nT - vende pacote de trigo \n\nM vende suco de morango" ;
+
+
+let textoIntro ="Olá, caro jogador.\n\nSeja muito bem-vindo ao Vila Agrinho!\nNesta jornada, você descobrirá a importante conexão entre o campo e a cidade, colaborando com os moradores locais.\n\nSua missão é clara: procure os fazendeiros nas hortas, receba as sementes e plante-as (pressionando ENTER) para acompanhar o crescimento e a colheita dos frutos.\n\nPara acessar sua mochila e verificar seus itens, pressione a tecla E.\n\nPara viajar para a cidade e voltar, pressione a tecla C. Ao ir para a cidade, suas sementes desaparecerão do inventário, abrindo espaço para novos itens!\n\n**Atenção:** Ao retornar para o campo, o pacote de trigo e o suco de morango também serão deixados para trás, pois são produtos para a cidade.\n\nNa cidade, procure os NPCs do Mercado e da Indústria e aperte Q para entrar nesses locais.\n\nNa Indústria, use a tecla 2 para transformar o trigo em pacotes de trigo.\n\nNa Indústria, use a tecla 3 para transformar morangos em suco de morango.\n\nNo Mercado, pressione **T** para vender Pacotes de Trigo e **M** para vender Suco de Morango, e acumule dinheiro!\n\n**O seu objetivo é alcançar 30 de dinheiro!**\n\n Para voltar nesta tela, pressione i. Boa sorte — e aproveite sua aventura no mundo de Agrinho!";
 
 let textoAtual = ""; // Texto que está sendo animado na introdução (digitando).
 let indiceTexto = 0; // Índice do caractere atual na animação de digitação da introdução.
@@ -90,6 +96,8 @@ let mensagemAgradecimentoCompleta = false; // Indica se a mensagem de agradecime
 // disponíveis antes que o jogo comece a ser renderizado, evitando erros e atrasos.
 // =======================================================================================
 function preload() {
+  
+  musicaPrincipal = loadSound ("som_vila_agrinho.mp3")
   mapa = loadImage("Cenario.agrinho.png"); // Carrega a imagem do cenário do campo.
   mapaColisao = loadImage("colisao.png"); // Carrega o mapa de colisão (geralmente uma imagem em preto e branco).
   imgCidade = loadImage("cidade.png"); // Carrega a imagem do cenário da cidade.
@@ -128,6 +136,14 @@ function setup() {
   createCanvas(larguraTelaNormal, alturaTelaNormal); // Cria o canvas com as dimensões iniciais.
   noSmooth(); // Desabilita o anti-aliasing para um estilo pixelado, comum em jogos retrô.
 
+  // Inicia a música principal e coloca em loop
+  userStartAudio(); // Garante que o som seja liberado nos navegadores
+  if (!musicaPrincipal.isPlaying()) {
+    musicaPrincipal.setVolume(0.5); // volume opcional
+    musicaPrincipal.setLoop(true);  // toca pra sempre
+    musicaPrincipal.play();         // toca a música
+  }
+
   // Inicialização das propriedades do personagem principal.
   personagem = { x: 250, y: 250, largura: 15, altura: 15, velocidade: 0.7 };
   // Inicialização das propriedades dos NPCs fazendeiros.
@@ -139,10 +155,12 @@ function setup() {
   npcIndustria = { x: 350, y: 395, largura: 60, altura: 60 };
 
   mapaColisao.loadPixels(); // Carrega os pixels do mapa de colisão para detecção precisa.
+  
   // Calcula a posição do botão de iniciar para centralizá-lo na tela.
   botaoX = width / 2 - botaoLargura / 2;
   botaoY = height / 2 + botaoAltura / 40;
 }
+
 
 // =======================================================================================
 // LOOP PRINCIPAL DO JOGO (DRAW)
@@ -153,6 +171,26 @@ function setup() {
 function draw() {
   // Lógica para a tela de Menu.
   // Condicional para redimensionar o canvas apenas se necessário, otimizando o desempenho.
+  
+  if (mostrarIntroducaoNovamente) {
+  // Fundo preto cobrindo a tela
+  fill(0);
+  rect(0, 0, width, height);
+
+  // Texto branco por cima
+  fill(255);
+  textSize(14); // diminui um pouco a fonte se estiver cortando
+  textAlign(LEFT, TOP); // começa do canto superior esquerdo
+
+  // Margens maiores pros lados
+  let margem = 40;
+
+  // Mostra o texto centralizado dentro da área com margens
+  text(textoIntroducao, margem, margem, width - 2 * margem, height - 2 * margem);
+  return;
+}
+
+
   if (estado === "menu") {
     if (width !== larguraTelaNormal || height !== alturaTelaNormal) {
       resizeCanvas(larguraTelaNormal, alturaTelaNormal);
@@ -161,6 +199,21 @@ function draw() {
     }
     image(imgMenu, 0, 0, width, height); // Desenha a imagem de fundo do menu.
     image(imgBotao, botaoX, botaoY, botaoLargura, botaoAltura); // Desenha o botão de iniciar.
+    
+    let tempo = millis() / 500;
+let escalaBotao = 1 + 0.05 * sin(tempo); // variação suave de escala
+push();
+translate(botaoX + botaoLargura / 2, botaoY + botaoAltura / 2);
+scale(escalaBotao);
+image(
+  imgBotao,
+  -botaoLargura / 2,
+  -botaoAltura / 2,
+  botaoLargura,
+  botaoAltura
+);
+pop();
+
     return; // Sai da função draw, pois o jogo não deve progredir.
   }
 
@@ -170,7 +223,7 @@ function draw() {
       resizeCanvas(larguraTelaNormal, alturaTelaNormal);
     }
     image(imgLoading, 0, 0, width, height); // Desenha a imagem de carregamento.
-    if (millis() - tempoLoading > 15000) {
+    if (millis() - tempoLoading > 3000) {
       // Espera 15 segundos antes de ir para a introdução.
       estado = "introducao";
     }
@@ -248,6 +301,15 @@ function cameraY() {
 // a lógica de animação de texto e layout, o que facilita a manutenção e adição de novas telas.
 // =======================================================================================
 function drawIntro() {
+  
+  // Cores para transição de fundo
+let corInicio = color(70, 130, 180);
+let corFim = color(90, 130, 180);
+let tFundo = (millis() % 5000) / 5000; // ciclo de 5 segundos
+let corAtual = lerpColor (corInicio, corFim, tFundo);
+background(corAtual); // substitui o antigo background(0)
+
+
   fill(255); // Cor branca para a caixa de texto.
   stroke(0); // Borda preta.
   strokeWeight(4); // Espessura da borda.
@@ -334,6 +396,20 @@ function drawGanhou() {
 // e a capacidade de depuração.
 // =======================================================================================
 function keyPressed() {
+  
+  
+  // Se estiver mostrando a introdução novamente, qualquer tecla fecha
+if (mostrarIntroducaoNovamente) {
+  mostrarIntroducaoNovamente = false;
+  return;
+}
+
+// Atalho para abrir a introdução a qualquer momento
+if (key === 'i' || key === 'I') {
+  mostrarIntroducaoNovamente = true;
+  return;
+}
+
   // Se o jogo já foi ganho, nenhuma tecla deve fazer algo (exceto continuar da tela de agradecimento).
   if (estado === "ganhou") {
     if (mensagemAgradecimentoCompleta) {
@@ -375,9 +451,9 @@ function keyPressed() {
         tempoMensagem = millis();
       }
       estado = "cidade"; // Muda para o estado da cidade.
-      // Reposiciona o personagem na cidade.
-      personagem.x = width / 2 - (personagem.largura * escala) / 2;
-      personagem.y = height / 2 - (personagem.altura * escala) / 2;
+      // Reposiciona o personagem na cidade........
+      personagem.x = 35
+      personagem.y = 380
     } else if (estado === "cidade") {
       // Mensagem e remoção de produtos processados ao sair da cidade.
       if (
@@ -396,9 +472,9 @@ function keyPressed() {
       personagem.y = 45;
     } else if (estado === "mercadoInterior" || estado === "industriaInterior") {
       estado = "cidade"; // Retorna à cidade dos interiores.
-      // Reposiciona o personagem na cidade.
-      personagem.x = width / 2 - (personagem.largura * escala) / 2;
-      personagem.y = height / 2 - (personagem.altura * escala) / 2;
+      // Reposiciona o personagem na cidade......
+      personagem.x = 35
+      personagem.y = 380
     }
     return;
   }
@@ -477,9 +553,9 @@ function keyPressed() {
             height - 50
           ) < 50
         ) {
-          estado = "cidade"; // Retorna à cidade.
-          personagem.x = npcIndustria.x; // Reposiciona perto do NPC da indústria.
-          personagem.y = npcIndustria.y + npcIndustria.altura / 2 + 10;
+          estado = "cidade"; // Retorna à cidade.....
+          personagem.x = 35
+          personagem.y = 380
           mostrarMensagem = true;
           textoMensagem = "De volta à cidade!";
           tempoMensagem = millis();
@@ -613,6 +689,12 @@ function keyPressed() {
 }
 
 function mousePressed() {
+  if (!musicaPrincipal.isPlaying()) {
+    musicaPrincipal.setLoop(true);
+    musicaPrincipal.play();
+  }
+
+
   // Lógica para o botão de iniciar no menu.
   if (estado === "menu") {
     if (
@@ -761,8 +843,8 @@ function drawCidade() {
   let velocidadeVisual = personagem.velocidade * escala; // Ajusta a velocidade para a escala da cidade.
 
   // Lógica de movimento do personagem.
-  if (keyIsDown(87)) novaY -= velocidadeVisual;
-  if (keyIsDown(83)) novaY += velocidadeVisual;
+  if (keyIsDown(0)) novaY -= velocidadeVisual;
+  if (keyIsDown(0)) novaY += velocidadeVisual;
   if (keyIsDown(65)) {
     novaX -= velocidadeVisual;
     direcao = "esquerda";
@@ -1026,7 +1108,7 @@ function drawDinheiroDisplay() {
 // =======================================================================================
 // Função: Verifica a condição de vitória.
 function checkWinCondition() {
-  if (dinheiro >= 30) {
+  if (dinheiro >= 80) {
     estado = "ganhou"; // Altera o estado do jogo para "ganhou".
     // Reinicia as variáveis de texto para a animação da mensagem de agradecimento.
     textoAtualAgradecimento = "";
