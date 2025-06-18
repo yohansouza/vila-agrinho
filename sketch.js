@@ -1,4 +1,4 @@
-// =======================================================================================
+//=======================================================================================
 // DECLARAÇÃO DE VARIÁVEIS GLOBAIS E RECURSOS DO JOGO
 // Estas variáveis são acessíveis em todas as funções e controlam o estado geral do jogo,
 // imagens, personagens e itens. A organização aqui facilita a localização e modificação
@@ -72,10 +72,10 @@ let mostrarIntroducaoNovamente = false; // Controla se o texto da introdução s
 
 
 
-let textoIntroducao = "Olá, caro jogador.\n\nEntão está com duvida nos comandos? Tudo bem, aqui vai uma lista dos comandos do Vila Agrinho: \n\nWASD - mover personagem \n\nE - abrir inventário \n\nQ - conversa com o npc indútria e cidade \n\nC - leva o personagem a cidade \n\n1 - transforma trigo em pacote de trigo \n\n2 - transforma morango em suco \n\nT - vende pacote de trigo \n\nM vende suco de morango" ;
+let textoIntroducao = "Olá, caro jogador!\n\nEntão está com dúvidas nos comandos? Tudo bem, aqui vai uma lista dos comandos do Vila Agrinho: \n\nWASD - Mover personagem \n\nE - Abrir inventário \n\nQ - Conversar com o npc indútria e mercado \n\nC - Leva o personagem a cidade \n\n2 - Transforma trigo em pacote de trigo \n\n3 - transforma morango em suco \n\nT - vende pacote de trigo \n\nM vende suco de morango";
 
 
-let textoIntro ="Olá, caro jogador.\n\nSeja muito bem-vindo ao Vila Agrinho!\nNesta jornada, você descobrirá a importante conexão entre o campo e a cidade, colaborando com os moradores locais.\n\nSua missão é clara: procure os fazendeiros nas hortas, receba as sementes e plante-as (pressionando ENTER) para acompanhar o crescimento e a colheita dos frutos.\n\nPara acessar sua mochila e verificar seus itens, pressione a tecla E.\n\nPara viajar para a cidade e voltar, pressione a tecla C. Ao ir para a cidade, suas sementes desaparecerão do inventário, abrindo espaço para novos itens!\n\n**Atenção:** Ao retornar para o campo, o pacote de trigo e o suco de morango também serão deixados para trás, pois são produtos para a cidade.\n\nNa cidade, procure os NPCs do Mercado e da Indústria e aperte Q para entrar nesses locais.\n\nNa Indústria, use a tecla 2 para transformar o trigo em pacotes de trigo.\n\nNa Indústria, use a tecla 3 para transformar morangos em suco de morango.\n\nNo Mercado, pressione **T** para vender Pacotes de Trigo e **M** para vender Suco de Morango, e acumule dinheiro!\n\n**O seu objetivo é alcançar 30 de dinheiro!**\n\n Para voltar nesta tela, pressione i. Boa sorte — e aproveite sua aventura no mundo de Agrinho!";
+let textoIntro ="Olá, caro jogador.\n\nSeja muito bem-vindo ao Vila Agrinho!\n\nNesta jornada, você descobrirá a importante conexão entre o campo e a cidade, colaborando com os moradores locais.\n\nSua missão é clara: procure os fazendeiros nas hortas, receba as sementes e plante-as (pressionando ENTER) para acompanhar o crescimento e a colheita dos frutos.\n\nPara acessar sua mochila e verificar seus itens, pressione a tecla E.\n\nPara viajar para a cidade e voltar, pressione a tecla C. Ao ir para a cidade, suas sementes desaparecerão do inventário, abrindo espaço para novos itens!\n\n**Atenção:** Ao retornar para o campo, o pacote de trigo e o suco de morango também serão deixados para trás, pois são produtos para a cidade.\n\nNa cidade, procure os NPCs do Mercado e da Indústria e aperte Q para entrar nesses locais.\n\nNa Indústria, use a tecla 2 para transformar o trigo em pacotes de trigo.\n\nNa Indústria, use a tecla 3 para transformar morangos em suco de morango.\n\nNo Mercado, pressione **T** para vender Pacotes de Trigo e **M** para vender Suco de Morango, e acumule dinheiro! \n\nSeu objetivo é alcançar até 30 de dinheiro. \n\nPara acessar controles, pressione i. \n\nBoa sorte — e aproveite sua aventura no mundo de Agrinho!";
 
 let textoAtual = ""; // Texto que está sendo animado na introdução (digitando).
 let indiceTexto = 0; // Índice do caractere atual na animação de digitação da introdução.
@@ -183,7 +183,7 @@ function draw() {
   textAlign(LEFT, TOP); // começa do canto superior esquerdo
 
   // Margens maiores pros lados
-  let margem = 40;
+  let margem = 10;
 
   // Mostra o texto centralizado dentro da área com margens
   text(textoIntroducao, margem, margem, width - 2 * margem, height - 2 * margem);
@@ -316,12 +316,12 @@ background(corAtual); // substitui o antigo background(0)
   rect(width * 0.1, height * 0.1, width * 0.8, height * 0.8, 20); // Desenha a caixa arredondada.
   noStroke(); // Remove a borda para o texto.
   fill(0); // Cor preta para o texto.
-  textSize(16); // Tamanho da fonte.
+  textSize(13); // Tamanho da fonte.
   textAlign(LEFT, TOP); // Alinhamento do texto.
-  textLeading(22); // Espaçamento entre linhas.
+  textLeading(18); // Espaçamento entre linhas.
 
   // Animação de digitação do texto da introdução.
-  if (indiceTexto < textoIntro.length && millis() - tempoUltimaLetra > 30) {
+  if (indiceTexto < textoIntro.length && millis() - tempoUltimaLetra > 9) {
     textoAtual += textoIntro[indiceTexto]; // Adiciona a próxima letra ao texto atual.
     indiceTexto++; // Incrementa o índice.
     tempoUltimaLetra = millis(); // Atualiza o timestamp.
