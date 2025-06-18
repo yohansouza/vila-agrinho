@@ -321,7 +321,7 @@ background(corAtual); // substitui o antigo background(0)
   textLeading(18); // Espaçamento entre linhas.
 
   // Animação de digitação do texto da introdução.
-  if (indiceTexto < textoIntro.length && millis() - tempoUltimaLetra > 8) {
+  if (indiceTexto < textoIntro.length && millis() - tempoUltimaLetra > 9) {
     textoAtual += textoIntro[indiceTexto]; // Adiciona a próxima letra ao texto atual.
     indiceTexto++; // Incrementa o índice.
     tempoUltimaLetra = millis(); // Atualiza o timestamp.
