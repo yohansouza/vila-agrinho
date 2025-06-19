@@ -24,6 +24,8 @@ Ao ir para a cidade, suas sementes desaparecerão do inventário, abrindo espaç
 
 Na cidade, procure os NPCs do Mercado e da Indústria e aperte **Q** para entrar nesses locais.
 
+Para ver os controles do Vila Argrinho, pressione **i**
+
 Na Indústria:
 - Use a tecla **2** para transformar trigo em **Pacotes de Trigo**.
 - Use a tecla **3** para transformar morangos em **Suco de Morango**.
@@ -32,7 +34,7 @@ No Mercado:
 - Pressione **T** para vender Pacotes de Trigo.
 - Pressione **M** para vender Suco de Morango.
 
-💰 **O seu objetivo é alcançar 30 de dinheiro!**
+💰 **O seu objetivo é alcançar 80 de dinheiro!**
 
 Boa sorte — e aproveite sua aventura no mundo de Agrinho!
 
@@ -77,7 +79,7 @@ Boa sorte — e aproveite sua aventura no mundo de Agrinho!
 - Viaje para a cidade com **C**.
 - Produtos da cidade (suco e pacote de trigo) somem ao voltar pro campo.
 - Venda os itens no mercado e acumule dinheiro.
-- **Objetivo final: alcançar 30 de dinheiro.**
+- **Objetivo final: alcançar 80 de dinheiro.**
 
 ---
 
@@ -96,6 +98,8 @@ Boa sorte — e aproveite sua aventura no mundo de Agrinho!
 
 ## Tecnologias
 - Feito com **JavaScript** e **p5.js**
+- Efeitos sonoros produzidos com **Suno**
+- **O projeto contém funcionalidade de contagem e armazenamente de itens**
 - Estilo visual em **Pixel Art**
 - Projeto educativo e criativo voltado ao tema do campo e cidade
 
